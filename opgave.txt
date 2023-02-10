@@ -1,0 +1,57 @@
+tip kristof: asana gebruiken om onderling taken te verdelen/plannen
+
+groepswerk 2:
+deadline = 30 mei
+inclusief unit testing
+bij elke wijziging een commit doen
+branchen gebruiken op github
+
+webbshop maken: boeken en ebook en audio
+- klantenbestand
+- product pagina's
+- gemakkelijke filter op produt
+- login/wachtwoord reset
+- wenslijst van een klant. Klant kan boek op wenslijst zeten, en uiteraard daar ook afhalen
+- GEEN shopping cart, GEEN betalingssysteem
+
+tip kristof: flask, geen django
+
+in te leveren: 
+- korte (!) analyse (op het einde mee inleveren)
+- model view controller
+- unit testing (niet van ALLES, kristof gaat nog specifieren van wat...)
+- paar security dingen
+- requirements.txt met daarin de gebruikte packages die moeten geinstalleerd worden. pip freeze naar ne file -> virtual environment
+- die requirements.txt moet automatisch kunnen worden ingeladen om een virtual environment aan te maken
+
+kristof gaat testen op sequel injectie... best WTforms gebruiken 
+try...except... moet er zeker inzitten... 
+bij lege databank: geen crashen maar gewoon melding "er zitten geen boeken in deze databank"
+een profiel per account, dat de gebruiken kan aanpassen
+ook een admin, die alles kan zien/aanpassen
+
+flask profiles en/of flask security kunnen handig zijnn per profiel
+
+sql script op github zetten om database te maken
+
+met foto's. foto's kan mee in databank, of kan extern opgeslagen... best zelf ergens extern hosten.
+als er nog geen foto is van een boek: ook iets tonen.... dus niet "image bestaat niet".... 
+website alleen in het nederlands. Per boek wel bijhouden in welke talen je het kan verkrijgen
+
+de eigenaar moet boeken kunnen toevoegen...
+
+filteren op titel. filteren op auteur. filter op type. filter op categorie... 
+categorie hoeven niet van die "vinkvakjes" te zijn... gewoon een knop "horror" brengt je naar de horrorboeken
+index leggen op de velden waarop je kan filteren (soms filter op velden apart, soms ook index op meerdere velden samen, bv. als zoekbalk in meerdere kolommen gaat kijken)
+
+boek: naam, verschijningsdatum, categorie, auteur, bestaan er vertalingen (aantal pagina's etc is niet zo belangrijk)
+leeftijdscategorie moeten we NIET toevoegen
+
+homepagina: gewoon korte uitleg wat de website doet
+
+foutafhandeling moet erin zitten
+
+tip: voor tabel: tabbleresponsive (bootstrap)
+tip: kristof toont "boekenkraam.nl" in de klas
+
+iemand die niet is ingelogd kan wel alles zien... gelijk bij coolblue
