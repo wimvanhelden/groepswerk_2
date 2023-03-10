@@ -1,0 +1,19 @@
+first time use: 
+
+1) set up the virtual environment: 
+	- navigate to the project repository in cmd screen
+	- make a virtual environment with command >python -m venv venv (this can take a minute)
+	(this creates a folder called "venv" where the environment is stored)
+	- activate the virtual environment with command >venv\Scripts\activate.bat
+	- install all the packages you need by running command >pip install -r requirements.txt
+	- (every time you run this app you should first active the virtual environment)
+
+2) run the server: 
+	- in cmd screen: run command >python run.py
+
+3) open the web application: 
+	- in your web browser go to adress "http://localhost:5000/"
+
+
+
+

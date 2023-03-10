@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <!-- test is there are books being passed (test that lengths != 0 and books is not None)-->
+    {% if books and books|length > 0 %}
+        {% for book in books %}            
+            <h1>{{book.title}}</h1> 
+            <p>{{book.author}}</p> 
+            <p>{{book.description}}</p>
+            
+        {% endfor %}
+    {%else%}
+        <h1>No books in database! contact system administrator</h1> 
+    {% endif%}
+
+{% endblock content %}
