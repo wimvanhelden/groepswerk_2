@@ -10,4 +10,6 @@ app.app_context().push()  #deze lijn staat niet op youtube tutorial... was bij m
 #de database word aangemaakt in een folder "instance", ik ga die handmatig verzetten naar main directory
 
 
-from . import routes
+
+
+from . import routes, models

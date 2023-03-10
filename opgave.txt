@@ -55,3 +55,7 @@ tip: voor tabel: tabbleresponsive (bootstrap)
 tip: kristof toont "boekenkraam.nl" in de klas
 
 iemand die niet is ingelogd kan wel alles zien... gelijk bij coolblue
+
+geen sqlite, mariadb of mysql
+
+wachtwoordreset: hoeft niet via email, gewoon een print is OK
