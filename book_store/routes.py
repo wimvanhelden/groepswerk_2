@@ -7,6 +7,7 @@ import os #used for checking the file extension (jpg , ...) of new profile pictu
 from PIL import Image #PIL is pillow, used for resizing profile pictures (pip install Pillow)
 
 #dummy data for books (development): 
+"""
 books_dict = [   
     {'author':'Umberto Eco',
      'title': "De naam van de roos",
@@ -18,6 +19,11 @@ books_dict = [
      'title':'De leeuw van Vlaanderen',
      'description': 'Klassieker over de guldensporenslag'} 
 ]
+"""
+
+books_dict = Book.query.all()
+
+
 
 
 
@@ -25,6 +31,11 @@ books_dict = [
 @app.route("/")
 def home():
     return render_template("home.html")
+
+@app.route("/test")  #development only!!!
+@app.route("/")
+def test():
+    return render_template("test.html")
 
 @app.route("/about")
 def about():
