@@ -1,6 +1,14 @@
-from .. import db, app
+from .. import db, login_manager
 from flask_login import UserMixin
 from datetime import datetime
+
+
+
+#function for reloading the user stored in user session, need this for the app to work, because the function has to know how to find a user by id
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))  #does this need try except?
+
 
 class User(db.Model, UserMixin): #flask expects certain attributes and methods in our model (4): is_authenticated , is_active, is_anonymous, get_id. we could add them ourselves, but easier is inheriting from flask_login class UserMixin
     id = db.Column(db.Integer, primary_key=True)
@@ -15,6 +23,7 @@ class User(db.Model, UserMixin): #flask expects certain attributes and methods i
     def __repr__(self): #similar to __str__, for development purposes
         return f"User('{self.username}', '{self.email}')"
     
+
 
 
 

@@ -2,7 +2,7 @@ from .. import db
 
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String(10))  #type is hardcover, ebook of audiobook
+    type = db.Column(db.String(15))  #type is hardcover, ebook of audiobook
     price = db.Column(db.Float)
     title = db.Column(db.String(50), unique=True, nullable=False)
     author = db.Column(db.String(30), nullable=False)  #dit kan ook met linktabel.. of eenvoudiger.. 

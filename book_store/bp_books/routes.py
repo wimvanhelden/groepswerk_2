@@ -17,7 +17,7 @@ def books():
 
 
 
-
+#route foor "books": page with overview of all the books
 @bp_books.route("/add_book", methods=['POST', 'GET'])
 def add_book():
     form = AddBookForm()   
@@ -32,6 +32,9 @@ def add_book():
             book.title = form.title.data
             book.author = form.author.data
             book.description = form.description.data
+            book.price = form.price.data
+            book.type = form.type.data
+            book.category = form.category.data
             db.session.add(book)
             db.session.commit()
             flash(f'This book has been added!', 'success')            
@@ -39,3 +42,10 @@ def add_book():
         except:
             flash(f'This book could not be added.. maybe it is already in database?', 'danger')
     return render_template("add_book.html", title="Add Book", form=form)
+
+
+#route for "book": page for individual books: 
+@bp_books.route("/book/<book_id>")
+def book(book_id):
+    book = Book.query.get_or_404(book_id)  #we use this method instead of get to handle errors
+    return render_template('book.html', title=book.title, book=book)
