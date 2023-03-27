@@ -1,6 +1,7 @@
 from .. import db, login_manager
 from flask_login import UserMixin
 from datetime import datetime
+import jwt
 
 
 
@@ -23,10 +24,31 @@ class User(db.Model, UserMixin): #flask expects certain attributes and methods i
     def __repr__(self): #similar to __str__, for development purposes
         return f"User('{self.username}', '{self.email}')"
     
+    """
+    def get_token(self, expiration_time=600): 
+        return jwt.encode(‘something’: self.id, ‘exp’: time() + expires_in, secret_key, algorithm=’HS256’)
+    """
 
 
-
-
+"""
+    def get_reset_token(self, expires_sec=3000):
+        #create serializer object:
+        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
+        #return a token that is created by the dumps method, based on user_id:
+        return s.dumps({'user_id':self.id}).decode('utf-8')
+    
+    @staticmethod
+    def verify_reset_token(token):
+        #create serializer object:
+        s = Serializer(current_app.config['SECRET_KEY'])
+        #try getting the user_id from the token. this can fail, so we use try...except...
+        try: 
+            user_id = s.loads(token)['user_id]']
+        except: 
+            return None
+        #if we find a user_id in token: return the user with that user_id
+        return User.query.get(user_id)
+"""
     
 class Language(db.Model):
     id = db.Column(db.Integer, primary_key=True)
