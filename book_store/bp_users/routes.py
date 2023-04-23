@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from .forms import RegistrationForm, LoginForm, RequestResetForm, ResetPasswordForm
 from .. import bcrypt, db
 from .models import User
-from .user_controller import send_reset_email
+from .user_controller import send_reset_email, verify_reset_token
 
 
 
@@ -118,7 +118,7 @@ def reset_token(token):
         flash('You can not ask for password reset when already logged in', 'danger')
         return redirect(url_for('bp_main.home'))
     #try to verify (find) user by token:
-    user = User.verify_reset_token(token)
+    user = verify_reset_token(token)
     #if user is none: message token is invalid and redirect to "reset_request" page
     if user is None: 
         flash('Token is invalid or expired...', 'warning')
@@ -126,8 +126,9 @@ def reset_token(token):
     form = ResetPasswordForm()
     if form.validate_on_submit():
         #hash the password using bcrypt
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user.password = form.password.data
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')  # put this in password "setter" later
+        
+        user.password = hashed_password
         db.session.commit()
         flash(f'Your password has been updated!', 'success')
         return redirect(url_for('bp_users.login'))
