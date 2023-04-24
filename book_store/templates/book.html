@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
+
+
     <!-- d-flex is new version of "media class" -->
     <div class="d-flex">
         <div class="flex-shrink-0">
@@ -12,6 +14,10 @@
             description: {{book.description}}                 
             </p>               
         </div>
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('bp_books.update_book', book_id=book.id) }}">Update Book</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Book</button>
+          </div>
     </div>
     <br>
     <br>
@@ -19,5 +25,29 @@
     category: {{book.category}} <br>
     price: €{{book.price}} <br>
     <!-- toevoegen: talen --> 
+
     
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Book?</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <form action="{{ url_for('bp_books.delete_book', book_id=book.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    
+
 {% endblock content %}
+
