@@ -29,10 +29,11 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     #mail.init_app(app)
     #import and register blueprints
-    from .bp_users.routes import bp_users
-    app.register_blueprint(bp_users)
+
     from .bp_books.routes import bp_books
     app.register_blueprint(bp_books)
+    from .bp_users.routes import bp_users
+    app.register_blueprint(bp_users)
     from .bp_main.routes import bp_main
     app.register_blueprint(bp_main)
     return app

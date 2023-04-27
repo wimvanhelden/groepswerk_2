@@ -11,15 +11,22 @@ def load_user(user_id):
     return User.query.get(int(user_id))  #does this need try except?
 
 
+wishlist = db.Table('wishlist', db.Column("userId", 
+                    db.Integer, db.ForeignKey('user.id')),
+                    db.Column("bookId", db.Integer, db.ForeignKey('book.id')),
+                    db.Column("date_created", db.DateTime, nullable=False, default=datetime.utcnow))
+
+
 class User(db.Model, UserMixin): #flask expects certain attributes and methods in our model (4): is_authenticated , is_active, is_anonymous, get_id. we could add them ourselves, but easier is inheriting from flask_login class UserMixin
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)    
     password = db.Column(db.String(60), nullable=False) #will be hashed
-    date_created =  db.Column(db.DateTime, nullable=False, default=datetime.utcnow) #not datetime.utcnow()! always use UTC time when saving times in databas
+    date_created =  db.Column(db.DateTime, nullable=False, default=datetime.utcnow) #not datetime.utcnow()! always use UTC time when saving times in database
     #purchase = db.relationship('Post', backref='author', lazy=True)  #wij hebben n op n relaties, nog bekijken of dat ook gaat werken
-    #wishlist = ... 
+    wishlist = db.relationship("Book", secondary= wishlist, back_populates = "wishlist")
     #categorie... 
     def __repr__(self): #similar to __str__, for development purposes
         return f"User('{self.username}', '{self.email}')"
@@ -50,6 +57,3 @@ class User(db.Model, UserMixin): #flask expects certain attributes and methods i
         return User.query.get(user_id)
 """
     
-class Language(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    language = db.Column(db.String(20), unique=True, nullable=False)

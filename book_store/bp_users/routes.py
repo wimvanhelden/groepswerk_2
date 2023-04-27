@@ -4,40 +4,13 @@ from .forms import RegistrationForm, LoginForm, RequestResetForm, ResetPasswordF
 from .. import bcrypt, db
 from .models import User
 from .user_controller import send_reset_email, verify_reset_token
+from ..bp_books.models import Book
 
 
 
+# initiate Blueprint
 bp_users = Blueprint('bp_users', __name__)
 
-"""
-#function for sending reset emails:
-def send_reset_email(user):
-
-    import smtplib as smtp
-    import time
-    from ..config import Config
-    import jwt
-
-    connection = smtp.SMTP_SSL('smtp.gmail.com', 465)
-    
-    email_addr = 'groepswerktwee@gmail.com'  #put this in seperate file later
-    email_passwd = 'nzqxhmwdalwivadz'  #put this in seperate file later
-    user_adress = user.email
-    #generate token: 
-    expiration_time = 900  #900 seconds is 15 minutes
-    #get the app config key to encode the jwt: 
-    key = Config.SECRET_KEY
-    #set(encode) token:
-    token = jwt.encode({'user_email':user_adress, 'exp':time()+expiration_time}, key, algorithm ="HS256"  )
-
-    message = f"to reset password go to the following link {token} {url_for('bp_users.reset_token', token=token,_external=True)}"
-    message = f"to reset password go to the following link {url_for('bp_users.register')}"
- 
-    connection.login(email_addr, email_passwd)
-    connection.sendmail(from_addr=email_addr, to_addrs=user.email, msg=message)
-    connection.close()
-
-"""
 
 #route for register:
 @bp_users.route("/register", methods=["GET", "POST"])
@@ -133,3 +106,18 @@ def reset_token(token):
         flash(f'Your password has been updated!', 'success')
         return redirect(url_for('bp_users.login'))
     return render_template("reset_token.html", title="Reset Password", form=form)
+
+
+
+#route for adding a book to WISHLIST
+@bp_users.route("/add_wishlist/<book_id>", methods=['GET', 'POST'])
+def add_wishlist(book_id):
+    #if user is already logged in: redirect to home-page
+    if current_user.is_authenticated:
+        book_to_add = Book.query.get_or_404(book_id)
+        current_user.wishlist.append(book_to_add)
+        db.session.commit()
+        flash(f'book is added to wishlist', 'success')
+        return redirect(url_for('bp_main.home'))
+    
+

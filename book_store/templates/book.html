@@ -16,7 +16,9 @@
         </div>
         <div>
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('bp_books.update_book', book_id=book.id) }}">Update Book</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('bp_users.add_wishlist', book_id=book.id) }}">Add to wishlist</a>
             <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Book</button>
+
           </div>
     </div>
     <br>
