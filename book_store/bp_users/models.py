@@ -11,8 +11,13 @@ def load_user(user_id):
     return User.query.get(int(user_id))  #does this need try except?
 
 
-wishlist = db.Table('wishlist', db.Column("userId", 
-                    db.Integer, db.ForeignKey('user.id')),
+wishlist = db.Table('wishlist', 
+                    db.Column("userId", db.Integer, db.ForeignKey('user.id')),
+                    db.Column("bookId", db.Integer, db.ForeignKey('book.id')),
+                    db.Column("date_created", db.DateTime, nullable=False, default=datetime.utcnow))
+
+purchases = db.Table('purchases', 
+                     db.Column("userId", db.Integer, db.ForeignKey('user.id')),
                     db.Column("bookId", db.Integer, db.ForeignKey('book.id')),
                     db.Column("date_created", db.DateTime, nullable=False, default=datetime.utcnow))
 
@@ -25,7 +30,7 @@ class User(db.Model, UserMixin): #flask expects certain attributes and methods i
     email = db.Column(db.String(120), unique=True, nullable=False)    
     password = db.Column(db.String(60), nullable=False) #will be hashed
     date_created =  db.Column(db.DateTime, nullable=False, default=datetime.utcnow) #not datetime.utcnow()! always use UTC time when saving times in database
-    #purchase = db.relationship('Post', backref='author', lazy=True)  #wij hebben n op n relaties, nog bekijken of dat ook gaat werken
+    purchases = db.relationship("Book", secondary= purchases, back_populates = "purchases")
     wishlist = db.relationship("Book", secondary= wishlist, back_populates = "wishlist")
     #categorie... 
     def __repr__(self): #similar to __str__, for development purposes

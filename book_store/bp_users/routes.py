@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash, Blueprint, request
 from flask_login import login_user, current_user, logout_user, login_required
 from .forms import RegistrationForm, LoginForm, RequestResetForm, ResetPasswordForm
 from .. import bcrypt, db
-from .models import User
+from .models import User, purchases
 from .user_controller import send_reset_email, verify_reset_token
 from ..bp_books.models import Book
 
@@ -112,12 +112,33 @@ def reset_token(token):
 #route for adding a book to WISHLIST
 @bp_users.route("/add_wishlist/<book_id>", methods=['GET', 'POST'])
 def add_wishlist(book_id):
-    #if user is already logged in: redirect to home-page
-    if current_user.is_authenticated:
+    if current_user.is_authenticated: # change this later
         book_to_add = Book.query.get_or_404(book_id)
         current_user.wishlist.append(book_to_add)
         db.session.commit()
         flash(f'book is added to wishlist', 'success')
         return redirect(url_for('bp_main.home'))
+    
+
+#route for PURCHASING a book
+@bp_users.route("/purchase/<book_id>", methods=['GET', 'POST'])
+def purchase(book_id):
+   if current_user.is_authenticated:# change this later
+        book_to_add = Book.query.get_or_404(book_id)
+        current_user.purchases.append(book_to_add,)
+        db.session.commit()
+        flash(f'thank you for your purchase!', 'success')
+        return redirect(url_for('bp_main.home'))
+   
+
+#route foor "WISHLIST": page with overview of all the books in the user wishlist
+# add: user has to be logged in
+@bp_users.route("/wishlist/<user_id>")
+def show_wishlist(user_id):
+    user_wishlist = User.query.get_or_404(user_id)
+    books_dict = user_wishlist.wishlist
+    return render_template("wishlist.html", title="wishlist",  books=books_dict, user = user_wishlist)  #wishlist.html handles books_dict == None or books_dict empty
+
+
     
 

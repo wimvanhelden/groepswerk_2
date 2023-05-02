@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div>
+showing wishlist for user: {{user.username}}
+
+</div>
+    <!-- test is there are books being passed (test that lengths != 0 and books is not None)-->
+    {% if books and books|length > 0 %}
+        {% for book in books %}            
+          <!-- d-flex is new version of "media class" -->
+          <div class="d-flex">
+            <div class="flex-shrink-0">
+                <img class="rounded-circle account-img" src="{{url_for('static', filename='pictures/' + book.image_file)}}" >
+            </div>
+            <div class="flex-grow-1 ms-3">
+              
+              <h2><a class="article-title" href= "{{url_for('bp_books.book', book_id=book.id) }}"> {{ book.title }} </a> </h2>
+              <p class="article-content"> author: {{book.author}}  
+                description: {{book.description}}                 
+              </p>               
+            </div>
+          </div>
+                  
+            
+        {% endfor %}
+    {%else%}
+        <h1>No books in wishlist yet!</h1> 
+    {% endif%}
+
+
+{% endblock content %}
+
+

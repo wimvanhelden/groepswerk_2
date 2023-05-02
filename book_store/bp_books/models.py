@@ -1,5 +1,5 @@
 from .. import db
-from ..bp_users.models import wishlist
+from ..bp_users.models import wishlist, purchases
 
 class Book(db.Model):
     __tablename__ = 'book'
@@ -13,6 +13,7 @@ class Book(db.Model):
     category = db.Column(db.String(20))  #categorie example horror, drama...
     db.UniqueConstraint('title', 'author', name='uix_title_author')
     wishlist = db.relationship("User", secondary= wishlist, back_populates = "wishlist")
+    purchases = db.relationship("User", secondary= purchases, back_populates = "purchases")
 
 """
 class Language(db.Model):  #finish this up later
