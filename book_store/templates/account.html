@@ -1,24 +1,12 @@
 {% extends "layout.html" %}
-{% block content %}
-  <!-- table with filter options-->
-  <table class="table table-bordered">
-    <tbody>
-        <tr>
-            <td><a class="article-title" href= "{{url_for('bp_books.books') }}"> all books </a> </td>
-            <td><a class="article-title" href= "{{url_for('bp_books.adventure') }}"> adventure </a> </td>
-            <td><a class="article-title" href= "{{url_for('bp_books.romance') }}"> romance </a> </td>
-            <td><a class="article-title" href= "{{url_for('bp_books.horror') }}"> horror </a> </td>
-            <td><a class="article-title" href= "{{url_for('bp_books.science_fiction') }}"> science fiction </a> </td>
-            <td><a class="article-title" href= "{{url_for('bp_books.nonfiction') }}"> nonfiction </a> </td>
-        </tr>
-    </tbody>
-  </table>
 
-    <!-- top line of text-->
-    <h1>
-      {{book_text}}
-    </h1>
-    
+{% block content %}
+
+
+<div>
+showing previous purchases for user: {{user.username}}
+
+</div>
     <!-- test is there are books being passed (test that lengths != 0 and books is not None)-->
     {% if books and books|length > 0 %}
         {% for book in books %}            
@@ -39,7 +27,7 @@
             
         {% endfor %}
     {%else%}
-        <h1>No books in database! contact system administrator</h1> 
+        <h1>No books purchased yet!</h1> 
     {% endif%}
 
 

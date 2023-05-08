@@ -2,6 +2,8 @@
 {% block content %}
 
 
+
+
     <!-- d-flex is new version of "media class" -->
     <div class="d-flex">
         <div class="flex-shrink-0">
@@ -15,12 +17,21 @@
             </p>               
         </div>
         <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('bp_books.update_book', book_id=book.id) }}">Update Book</a>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('bp_users.add_wishlist', book_id=book.id) }}">Add to wishlist</a>
+            <! --  if user is admin: show "update book" and "delete book"--> 
+            {% if current_user.type == 2 %}
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('bp_books.update_book', book_id=book.id) }}">Update Book</a>
+                <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Book</button>
+           {% endif%}
+           <! --  check if book isn't already in the user wishlist--> 
+           {% if book in current_user.wishlist %}
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('bp_users.delete_wishlist', book_id=book.id) }}">Remove from wishlist</a>
+           {% else %} 
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('bp_users.add_wishlist', book_id=book.id) }}">Add to wishlist</a>
+           {%endif %}
+           <! --  if already in wishlist: remove from wishlist--> 
+            
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('bp_users.purchase', book_id=book.id) }}">Purchase this book</a>
-            <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Book</button>
-
-          </div>
+        </div>
     </div>
     <br>
     <br>

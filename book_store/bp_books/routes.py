@@ -1,8 +1,10 @@
 from flask import render_template, redirect, url_for, flash, Blueprint, request
+from flask_login import login_user, current_user, logout_user, login_required
 from .util import save_picture
 from .. import db
 from .models import Book
 from .forms import AddBookForm, UpdateBookForm
+from ..bp_users.user_controller import admin_required
 #add: import form 
 #add: import models
 
@@ -13,12 +15,51 @@ bp_books = Blueprint('bp_books', __name__)
 @bp_books.route("/books")
 def books():
     books_dict = Book.query.all()
-    return render_template("books.html", title="books",  books=books_dict)  #books.html handles books_dict == None or books_dict empty
+    book_text = "All books: "
+    return render_template("books.html", title="books",  books=books_dict, book_text = book_text)  #books.html handles books_dict == None or books_dict empty
 
+#route foor "adventure": page with overview of all the adventure books
+@bp_books.route("/adventure")
+def adventure():
+    books_dict = Book.query.filter_by(category = "adventure").all()
+    book_text = "Adventure books: "
+    return render_template("books.html", title="books",  books=books_dict, book_text = book_text)  #books.html handles books_dict == None or books_dict empty
+
+#route foor "romance": page with overview of all the romance books
+@bp_books.route("/romance")
+def romance():
+    books_dict = Book.query.filter_by(category = "romance").all()
+    book_text = "romance books: "
+    return render_template("books.html", title="books",  books=books_dict, book_text = book_text)  #books.html handles books_dict == None or books_dict empty
+
+
+#route foor "horror": page with overview of all the horror books
+@bp_books.route("/horror")
+def horror():
+    books_dict = Book.query.filter_by(category = "horror").all()
+    book_text = "horror books: "
+    return render_template("books.html", title="books",  books=books_dict, book_text = book_text)  #books.html handles books_dict == None or books_dict empty
+
+#route foor "science fiction": page with overview of all the science fiction books
+@bp_books.route("/science_fiction")
+def science_fiction():
+    books_dict = Book.query.filter_by(category = "science fiction").all()
+    book_text = "science fiction books: "
+    return render_template("books.html", title="books",  books=books_dict, book_text = book_text)  #books.html handles books_dict == None or books_dict empty
+
+
+#route foor "nonfiction": page with overview of all the nonfiction books
+@bp_books.route("/nonfiction")
+def nonfiction():
+    books_dict = Book.query.filter_by(category = "nonfiction").all()
+    book_text = "nonfiction books: "
+    return render_template("books.html", title="books",  books=books_dict, book_text = book_text)  #books.html handles books_dict == None or books_dict empty
 
 
 #route ADD BOOK 
 @bp_books.route("/add_book", methods=['POST', 'GET'])
+@login_required
+@admin_required
 def add_book():
     form = AddBookForm()   
     if form.validate_on_submit():

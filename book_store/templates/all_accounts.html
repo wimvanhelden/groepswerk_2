@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <!-- test is there are users being passed (test that lengths != 0 and all_users is not None)-->
+    {% if all_users and all_users|length > 0 %}
+        <!-- initiate table-->
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">name</th>
+              <th scope="col">email</th>
+              <th scope="col">wishlist</th>
+              <th scope="col">account page</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% for user in all_users %}            
+          <tr>
+            <th scope="row">{{user.id}}</th>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td><a class="article-title" href= "{{url_for('bp_users.show_wishlist', user_id=user.id) }}"> wishlist </a> </td>
+            <td><a class="article-title" href= "{{url_for('bp_users.show_account', user_id=user.id) }}"> account info </a></td>
+          </tr>
+
+                  
+            
+        {% endfor %}
+        </tbody>
+      </table>
+    {%else%}
+        <h1>No books in database! contact system administrator</h1> 
+    {% endif%}
+
+
+{% endblock content %}
+
+
+          <!-- d-flex is new version of "media class" -->
+          <div class="d-flex">
+            <div class="flex-shrink-0">
+                <img class="rounded-circle account-img" src="{{url_for('static', filename='pictures/' + book.image_file)}}" >
+            </div>
+            <div class="flex-grow-1 ms-3">
+              
+              <h2><a class="article-title" href= "{{url_for('bp_books.book', book_id=book.id) }}"> {{ book.title }} </a> </h2>
+              <p class="article-content"> author: {{book.author}}  
+                description: {{book.description}}                 
+              </p>               
+            </div>
+          </div>

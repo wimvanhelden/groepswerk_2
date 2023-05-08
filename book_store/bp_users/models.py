@@ -32,11 +32,14 @@ class User(db.Model, UserMixin): #flask expects certain attributes and methods i
     date_created =  db.Column(db.DateTime, nullable=False, default=datetime.utcnow) #not datetime.utcnow()! always use UTC time when saving times in database
     purchases = db.relationship("Book", secondary= purchases, back_populates = "purchases")
     wishlist = db.relationship("Book", secondary= wishlist, back_populates = "wishlist")
-    #categorie... 
+    type = db.Column(db.Integer, default = 1)  # normal user: type=1, admin user: type = 2
+
+    # possible add_on: last_login_timestamp.. 
     def __repr__(self): #similar to __str__, for development purposes
-        return f"User('{self.username}', '{self.email}')"
+        return f"User('{self.username}', '{self.email}', '{self.type}')"
     
     """
+    
     def get_token(self, expiration_time=600): 
         return jwt.encode(‘something’: self.id, ‘exp’: time() + expires_in, secret_key, algorithm=’HS256’)
     """
