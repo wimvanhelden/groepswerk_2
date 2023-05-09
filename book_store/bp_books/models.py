@@ -15,8 +15,3 @@ class Book(db.Model):
     wishlist = db.relationship("User", secondary= wishlist, back_populates = "wishlist")
     purchases = db.relationship("User", secondary= purchases, back_populates = "purchases")
 
-"""
-class Language(db.Model):  #finish this up later
-    id = db.Column(db.Integer, primary_key=True)
-    language = db.Column(db.String(20), unique=True, nullable=False)
-"""

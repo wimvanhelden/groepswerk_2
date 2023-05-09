@@ -6,13 +6,42 @@ first time use:
 	(this creates a folder called "venv" where the environment is stored)
 	- activate the virtual environment with command >venv\Scripts\activate.bat
 	- install all the packages you need by running command >pip install -r requirements.txt
-	- (every time you run this app you should first active the virtual environment)
+	- (every time you run this app you should first active the virtual environment)2)
 
-2) run the server: 
+
+2) set up the database: 	
+	- open mysql workbench and make a new database using the script "create_database.sql" found in this folder (mysql)
+	- that should have created a database called "groepswerk_twee_bart_wim" containing 4 tables with already some data in them
+
+3) make a config_data.py file in this folder. This file should include: 
+	DB_USER  
+	DB_PASS  
+	DB_HOST  
+	DB_PORT 
+	DB_NAME 
+	password_token
+
+	typical values would be (but this might be different for your system: 
+	DB_USER = "root"
+	DB_PASS = "root"
+	DB_HOST = "127.0.0.1"
+	DB_PORT = "3306"
+	DB_NAME = "groepswerk_twee_bart_wim"
+	password_token = "6548447e5e2e44e889e6e22e" (or some other long random hex)
+
+4) run the server: 
 	- in cmd screen: run command >python run.py
 
-3) open the web application: 
+5) open the web application: 
 	- in your web browser go to adress "http://localhost:5000/"
+
+
+6) there are already some users in the database. To log in as administrator: 
+	-email : admin@bookstore.com 
+	-password: admin    
+
+
+-- reset password does not send an email but sends a link in cmd screen.... 
 
 
 

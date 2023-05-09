@@ -8,10 +8,6 @@ bp_main = Blueprint('bp_main', __name__)
 def home():
     return render_template("home.html")
 
-@bp_main.route("/test")  #development only!!!
-@bp_main.route("/")
-def test():
-    return render_template("test.html")
 
 @bp_main.route("/about")
 def about():

@@ -15,11 +15,11 @@ idna==3.4
 itsdangerous==2.1.2
 Jinja2==3.1.2
 MarkupSafe==2.1.2
+mysqlclient==2.1.1
 Pillow==9.4.0
 pycparser==2.21
 PyJWT==2.6.0
 SQLAlchemy==2.0.5.post1
 typing_extensions==4.5.0
 Werkzeug==2.2.3
-WTForms==3.0.1
 WTForms==3.0.1

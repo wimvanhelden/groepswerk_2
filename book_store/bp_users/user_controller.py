@@ -4,9 +4,11 @@ from flask_login import current_user
 from .models import User
 import jwt
 from time import time
-from ..config import Config
+
+from config_data import password_token
 
 
+#custom wrapper @admin_required
 def admin_required(f):
     @wraps(f)
     def wrapper_admin(*args, **kwargs):
@@ -31,7 +33,7 @@ def send_reset_email(email_adress):
             #generate token: 
             expiration_time = 900  #900 seconds is 15 minutes
             #get the app config key to encode the jwt: 
-            key = Config.SECRET_KEY
+            key = password_token
             #set(encode) token:
             token = jwt.encode({'user_email':email_adress, 'user_id':user_check.id, 'exp':time()+expiration_time}, key, algorithm ="HS256"  )
             print({url_for('bp_users.reset_token', token=token, _external=True)})
@@ -42,7 +44,7 @@ def send_reset_email(email_adress):
 
 def verify_reset_token(token):
     try:
-        key = Config.SECRET_KEY
+        key = password_token
         decoded_jwt = jwt.decode(token, key, algorithms=['HS256'])  
         print(decoded_jwt['user_id'])
         user_id = decoded_jwt['user_id']

@@ -26,13 +26,13 @@ class RegistrationForm(FlaskForm):
         if user: 
             raise ValidationError("email already exists, please pick a different one")
 
+
 class LoginForm(FlaskForm):
     #login happens with email, not username
     email = StringField('Email', validators = [DataRequired(), Email()])
     password = PasswordField('Password', validators = [DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
-
 
 
 class RequestResetForm(FlaskForm):
@@ -44,6 +44,7 @@ class RequestResetForm(FlaskForm):
         #    user = User.query.filter_by(email=email.data).first()
         #    if user is None: 
         #        raise ValidationError("There is no account with that email. Please register first.")
+            
             
 class ResetPasswordForm(FlaskForm):
     password = PasswordField('Password', validators = [DataRequired()])

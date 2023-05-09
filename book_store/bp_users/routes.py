@@ -95,36 +95,7 @@ def reset_request():
         
     return render_template("reset_request.html", title="Reset Password", form=form)
 
-"""
-#route for request reset passwourd
-@bp_users.route("/reset_password", methods=['GET', 'POST'])
-def reset_request():
-    #if user is already logged in: redirect to home-page
-    try: 
-        if current_user.is_authenticated:
-            flash('You can not ask for password reset when already logged in', 'danger')
-            return redirect(url_for('bp_main.home'))
-        form = RequestResetForm()
-        try: 
-            if form.validate_on_submit():
-                user = User.query.filter_by(email=form.email.data).first()
-                send_reset_email(user)
-                #email_adress = form.email.data
-                #send_reset_email(email_adress)
-                #send_reset_email(user)
-                flash('An email has been sent to you with instructions to reset your password', 'info')
-                return redirect(url_for("bp_users.login"))
-        except: 
-            flash('operation failed, check your connection DEBUG ', 'danger')  #DEBUG CHANGE LATER
 
-            return render_template("login.html", title="Login", form=form)            
-        return render_template("reset_request.html", title="Reset Password", form=form)
-    except: 
-        flash('operation failed, check your connection', 'danger') 
-
-    return render_template("reset_request.html", title="Reset Password", form=form)
-    #return render_template("login.html", title="Login", form=form)
-"""
 
 
 #route for password reset: enter new password
@@ -149,8 +120,6 @@ def reset_token(token):
         flash(f'Your password has been updated!', 'success')
         return redirect(url_for('bp_users.login'))
     return render_template("reset_token.html", title="Reset Password", form=form)
-
-
 
 
 #route for adding a book to WISHLIST
